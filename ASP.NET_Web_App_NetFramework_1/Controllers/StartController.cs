@@ -48,6 +48,65 @@ namespace ASP.NET_Web_App_NetFramework_1.Controllers
                 ViewBag.Message = "No matches found";
             }
 
+            return View();
+        }
+
+
+        // Register Method
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        // Register Method
+        [HttpPost]
+        public ActionResult Register(UserDTO user)
+        {
+            if (user.uPassword != user.passwordConfirmed)
+            {
+                ViewBag.Name = user.uName;
+                ViewBag.Email = user.uEmail;
+                ViewBag.Message = "Passwords don't match";
+                return View();
+            }
+
+            // If doesn't exist the user, 
+            if (DBUser.GetUserByEmail(user.uEmail) == null)
+            {
+                user.uPassword = UtilityService.ConvertSHA256(user.uPassword);
+                user.uToken = UtilityService.GenerateToken();
+                user.uReset = false;
+                user.uConfirmed = false;
+                bool response = DBUser.Register(user);
+
+                if (response)
+                {
+                    string path = HttpContext.Server.MapPath("~/Template/Confirm.html");
+                    string content = System.IO.File.ReadAllText(path);
+                    string url = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Headers["host"], "/Start/Confirm?token=" + user.uToken);
+
+                    string htmlBody = string.Format(content, user.uName, url);
+
+                    EmailDTO emailDTO = new EmailDTO()
+                    {
+                        To = user.uEmail,
+                        Subject = "Confirmation email",
+                        Body = htmlBody
+                    };
+
+                    bool sended = EmailService.Send(emailDTO);
+                    ViewBag.Created = true;
+                    ViewBag.Message = $"Your account has been created. We have sent an email to {user.uEmail} to confirm your account";
+                }
+                else
+                {
+                    ViewBag.Message = "Your account couldn't be created";
+                }
+            }
+            else
+            {
+                ViewBag.Message = "The email is already registered";
+            }
 
             return View();
         }
