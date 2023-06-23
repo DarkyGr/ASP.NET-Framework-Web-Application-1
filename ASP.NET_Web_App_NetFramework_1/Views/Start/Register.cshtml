@@ -1,0 +1,74 @@
+﻿﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sign up</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="row justify-content-center mt-5">
+
+        <div class="col-5">
+
+            <div class="card">
+                <div class="card-header"><h3 class="text-center">Registrar cuenta</h3></div>
+                <div class="card-body">
+
+                    @if (ViewBag.Created == null)
+                    {
+                        <form action="@Url.Action("Register","Start")" method="post">
+
+                            <div class="mb-3">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="uName" value="@(ViewBag.Name !=null ? ViewBag.Name : "")" required />
+                            </div>
+                            <div class="mb-3">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="uEmail" value="@(ViewBag.Email !=null ? ViewBag.Email : "")" required />
+                            </div>
+                            <div class="mb-3">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="uPassword" required />
+                            </div>
+                            <div class="mb-3">
+                                <label>Password Confirm</label>
+                                <input type="password" class="form-control" name="passwordConfirmed" required />
+                            </div>
+
+                            @if (ViewBag.Message != null)
+                            {
+                                <div class="alert alert-danger">
+                                    @ViewBag.Message
+                                </div>
+                            }
+
+                            <div class="mb-3">
+                                <div class="d-grid">
+                                    <button class="btn btn-primary" type="submit">Sign up </button>
+                                    <a class="btn btn-link" href="@Url.Action("Login","Start")">Do you already have an account? Log in</a>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="alert alert-success">
+                            <p>@ViewBag.Message</p>
+                            <a class="btn btn-success" href="@Url.Action("Login","Start")">Sign in</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
