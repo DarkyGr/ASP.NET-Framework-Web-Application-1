@@ -30,12 +30,12 @@ namespace ASP.NET_Web_App_NetFramework_1.Controllers
                 // If the user hasn't confirmed
                 if (!user.uConfirmed)
                 {
-                    ViewBag.Mensaje = $"You need to confirm your account. An email was sent to {email}";
+                    ViewBag.Message = $"You need to confirm your account. An email was sent to {email}";
                 }
                 // If the user hasn't reseted
                 else if (user.uReset)
                 {
-                    ViewBag.Mensaje = $"Your account has been requested to be restored, please check your inbox {email}";
+                    ViewBag.Message = $"Your account has been requested to be restored, please check your inbox {email}";
                 }
                 else
                 {
@@ -45,7 +45,7 @@ namespace ASP.NET_Web_App_NetFramework_1.Controllers
             }
             else
             {
-                ViewBag.Mensaje = "No matches found";
+                ViewBag.Message = "No matches found";
             }
 
 
