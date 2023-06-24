@@ -220,6 +220,7 @@
     <Content Include="Views\Start\Login.cshtml" />
     <Content Include="Views\Start\Register.cshtml" />
     <Content Include="Views\Start\Confirm.cshtml" />
+    <Content Include="Views\Start\Reset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
