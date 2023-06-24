@@ -221,6 +221,7 @@
     <Content Include="Views\Start\Register.cshtml" />
     <Content Include="Views\Start\Confirm.cshtml" />
     <Content Include="Views\Start\Reset.cshtml" />
+    <Content Include="Views\Start\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

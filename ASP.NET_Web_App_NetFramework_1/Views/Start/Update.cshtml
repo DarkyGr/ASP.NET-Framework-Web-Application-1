@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Update</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="row justify-content-center mt-5">
+
+        <div class="col-5">
+
+            <div class="card">
+                <div class="card-header"><h3 class="text-center">Restore password</h3></div>
+                <div class="card-body">
+                    @if (ViewBag.Reseted == null)
+                    {
+                        <form action="@Url.Action("Update","Start")" method="post">
+                            <input type="hidden" name="token" value="@ViewBag.Token" />
+
+                            <div class="mb-3">
+                                <label>Enter a new password</label>
+                                <input type="password" class="form-control" name="password" required />
+                            </div>
+                            <div class="mb-3">
+                                <label>Confirm Password</label>
+                                <input type="password" class="form-control" name="passwordConfirmed" required />
+                            </div>
+
+                            @if (ViewBag.Message != null)
+                            {
+                                <div class="alert alert-danger">
+                                    @ViewBag.Message
+                                </div>
+                            }
+
+                            <div class="mb-3">
+                                <div class="d-grid">
+                                    <button class="btn btn-primary" type="submit">Change Password</button>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="alert alert-success">
+                            <p>Your password was reset, now you can log in to your account with your new password.</p>
+                            <a class="btn btn-success" href="@Url.Action("Login","Start")">Sing in</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
