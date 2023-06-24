@@ -110,5 +110,13 @@ namespace ASP.NET_Web_App_NetFramework_1.Controllers
 
             return View();
         }
+
+
+        // Confirm Methid
+        public ActionResult Confirm(string token)
+        {
+            ViewBag.Response = DBUser.Confirm(token);
+            return View();
+        }
     }
 }
