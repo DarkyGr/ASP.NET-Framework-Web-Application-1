@@ -65,8 +65,8 @@ namespace ASP.NET_Web_App_NetFramework_1.Data
                     query += " where uEmail = @email and uPassword = @password";
 
                     SqlCommand cmd = new SqlCommand(query, oconnection);                    
-                    cmd.Parameters.AddWithValue("@email", user.uEmail);
-                    cmd.Parameters.AddWithValue("@password", user.uPassword);                    
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", password);                    
                     cmd.CommandType = CommandType.Text;
 
                     oconnection.Open();
@@ -107,7 +107,7 @@ namespace ASP.NET_Web_App_NetFramework_1.Data
                     query += " where uEmail = @email";
 
                     SqlCommand cmd = new SqlCommand(query, oconnection);
-                    cmd.Parameters.AddWithValue("@email", user.uEmail);
+                    cmd.Parameters.AddWithValue("@email", email);
                     cmd.CommandType = CommandType.Text;
 
                     oconnection.Open();

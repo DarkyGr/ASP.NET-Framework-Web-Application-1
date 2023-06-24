@@ -147,7 +147,7 @@ namespace ASP.NET_Web_App_NetFramework_1.Controllers
 
                     EmailDTO emailDTO = new EmailDTO()
                     {
-                        To = user.uEmail,
+                        To = email,
                         Subject = "Reset email",
                         Body = htmlBody
                     };
