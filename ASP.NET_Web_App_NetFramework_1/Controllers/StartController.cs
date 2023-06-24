@@ -112,10 +112,60 @@ namespace ASP.NET_Web_App_NetFramework_1.Controllers
         }
 
 
-        // Confirm Methid
+        // Confirm Method
         public ActionResult Confirm(string token)
         {
             ViewBag.Response = DBUser.Confirm(token);
+            return View();
+        }
+
+
+        // Reset Method
+        public ActionResult Reset()
+        {            
+            return View();
+        }
+
+        // Reset Method
+        [HttpPost]
+        public ActionResult Reset(string email)
+        {
+            UserDTO user = DBUser.GetUserByEmail(email);
+            ViewBag.Email = email;
+            if (user != null)
+            {
+                bool response = DBUser.ResetUpdate(1, user.uPassword, user.uToken);
+
+                // Validate response
+                if (response)
+                {
+                    string path = HttpContext.Server.MapPath("~/Template/Reset.html");
+                    string content = System.IO.File.ReadAllText(path);
+                    string url = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Headers["host"], "/Start/Update?token=" + user.uToken);
+
+                    string htmlBody = string.Format(content, user.uName, url);
+
+                    EmailDTO emailDTO = new EmailDTO()
+                    {
+                        To = user.uEmail,
+                        Subject = "Reset email",
+                        Body = htmlBody
+                    };
+
+                    bool sended = EmailService.Send(emailDTO);
+                    ViewBag.Reseted = true;                    
+                }
+                else
+                {
+                    ViewBag.Message = "Failed to reset account";
+                }
+
+            }
+            else
+            {
+                ViewBag.Message = "No matches found with mail";
+            }
+
             return View();
         }
     }
