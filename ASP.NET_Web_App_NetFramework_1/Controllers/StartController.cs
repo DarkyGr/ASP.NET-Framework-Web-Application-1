@@ -168,5 +168,34 @@ namespace ASP.NET_Web_App_NetFramework_1.Controllers
 
             return View();
         }
+
+
+        // Update Method
+        public ActionResult Update(string token)
+        {
+            ViewBag.Token = token;
+            return View();
+        }
+
+        // Update Method
+        [HttpPost]
+        public ActionResult Update(string token, string password, string passwordConfirmed)
+        {
+            ViewBag.Token = token;
+            if (password != passwordConfirmed)
+            {
+                ViewBag.Message = "Passwords don't match";
+                return View();
+            }
+
+            bool response = DBUser.ResetUpdate(0, UtilityService.ConvertSHA256(password), token);
+
+            if (response)
+                ViewBag.Reseted = true;
+            else
+                ViewBag.Message = "Couldn't update";
+
+            return View();
+        }
     }
 }
